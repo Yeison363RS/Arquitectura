@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 
 public class Conversor {
+
     private ArrayList<Integer> mantisa=new ArrayList<Integer>();
     private ArrayList<Integer> exponent=new ArrayList<Integer>();
     private int signo=0;
