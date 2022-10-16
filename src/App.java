@@ -1,10 +1,13 @@
 
+import controllers.Controller;
+import gui.GuiManager;
 import models.Conversor;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Conversor conver=new Conversor();
-        conver.convertSimpleFormat(321.21,1);
+        Conversor conver = new Conversor();
+        conver.convertSimpleFormat(321.21, 1);
         conver.printIEEEFormat();
+        new Controller();
     }
 }
