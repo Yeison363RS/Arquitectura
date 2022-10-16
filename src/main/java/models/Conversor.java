@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Conversor {
 
-    private PrecisionEnum precision;
+    private final PrecisionEnum precision;
     private ArrayList<Integer> mantisa = new ArrayList<>();
     private ArrayList<Integer> exponent = new ArrayList<>();
     private int signo = 0;
@@ -14,21 +14,22 @@ public class Conversor {
         this.precision = precision;
     }
 
-
-    public void convertSimpleFormat(double numberUser, int precision) {
-        int partInt = (int) numberUser;
-        double partDecimal = numberUser - partInt;
-        ArrayList<Integer> binInteger = getWholePartBits(partInt);
-        ArrayList<Integer> binDecimal = convertPartDecimal(partDecimal, 23 - (binInteger.size() - 1));
+    public void convertSimpleFormat(double numberUser) {
+        int wholePart = (int) numberUser;//Obtiene parte entera
+        double decimalPart = numberUser - wholePart;//Obtiene la parte decimal
+        ArrayList<Integer> binInteger = getWholePartBits(wholePart);
+        ArrayList<Integer> binDecimal = getDecimalPartBits(
+                decimalPart, precision.bitsMantisa - (binInteger.size() - 1)
+        );
         signo = (numberUser > 0) ? 0 : 1;
-        if (partInt == 0) {
+        if (wholePart == 0) {
             int negativeShifts = calculateNegativeShifts(binDecimal);
             if (negativeShifts > 0) {
-                binDecimal.addAll(convertPartDecimal(decimalValue, negativeShifts));
+                binDecimal.addAll(getDecimalPartBits(decimalValue, negativeShifts));
             }
-            this.exponent = calculateExponent(precision == 1 ? 8 : 11, -negativeShifts);
+            this.exponent = calculateExponent(-negativeShifts);
         } else {
-            this.exponent = calculateExponent(precision == 1 ? 8 : 11, binInteger.size() - 1);
+            this.exponent = calculateExponent(binInteger.size() - 1);
         }
         mantisa = conformateMantisa(binInteger, binDecimal);
     }
@@ -39,13 +40,11 @@ public class Conversor {
         System.out.println("mantisa: " + mantisa.toString());
     }
 
-    public ArrayList<Integer> calculateExponent(int precisionExponent, int shifts) {
-        int exponentDecimal = (int) Math.pow(2.0, precisionExponent - 1) - 1 + shifts;
+    public ArrayList<Integer> calculateExponent(int shifts) {
+        int exponentDecimal = (int) Math.pow(2.0, precision.bitsExponent - 1) - 1 + shifts;
         ArrayList<Integer> exponent = getWholePartBits(exponentDecimal);
-        //System.out.println(exponent.size()+"  "+precisionExponent);
-        while (exponent.size() != precisionExponent) {
-            exponent.add(0);
-            //System.out.println("sdds");
+        while (exponent.size() != precision.bitsExponent) {
+            exponent.add(0,0);
         }
         return exponent;
     }
@@ -89,17 +88,16 @@ public class Conversor {
         return binInt;
     }
 
-    public ArrayList<Integer> convertPartDecimal(double decimal, int totalPresicion) {
+    public ArrayList<Integer> getDecimalPartBits(double decimal, int totalPrecision) {
         ArrayList<Integer> binDecimal = new ArrayList<>();
-        while (totalPresicion >= 0) {
-            totalPresicion--;
+        for (int i = 0; i < totalPrecision; i++) {
             decimal *= 2;
-            if (decimal > 0) {
+            if (decimal >= 1) {
                 binDecimal.add(1);
-                decimal = decimal - 1;
-            } else {
-                binDecimal.add(1);
+                decimal--;
+                continue;
             }
+            binDecimal.add(0);
         }
         decimalValue = decimal;
         return binDecimal;
