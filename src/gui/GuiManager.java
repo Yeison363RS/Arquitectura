@@ -40,7 +40,7 @@ public class GuiManager extends JFrame {
     }
 
 
-    public String getNumberToConverter() {
+    public double getNumberToConverter() {
         return this.panelGetNumber.getNumberToCovert();
     }
 }

@@ -35,7 +35,13 @@ public class PanelGetNumber extends JPanel {
         this.add(btnConvert);
     }
 
-    public String getNumberToCovert() {
-        return this.textFieldGetNumberToConverter.getText();
+    public double getNumberToCovert() {
+        try {
+            return Double.parseDouble(this.textFieldGetNumberToConverter.getText());
+        } catch (NumberFormatException numberToCovert) {
+            Output.showErrorMessage("Por favor ingrese el decimal separado por coma :(");
+            return -1;
+        }
+
     }
 }

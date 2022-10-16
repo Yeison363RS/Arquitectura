@@ -18,7 +18,7 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String option = e.getActionCommand();
-        switch (option){
+        switch (option) {
             case Commands.BTN_CONVERT:
                 this.convert();
                 break;
@@ -27,6 +27,6 @@ public class Controller implements ActionListener {
 
     private void convert() {
         System.out.println("Convertir");
-        System.out.println(guiManager.getNumberToConverter());
+        System.out.println("Double: " + guiManager.getNumberToConverter());
     }
 }
