@@ -1,51 +1,68 @@
 package models;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ConversorTest {
 
     Conversor sC;
     Conversor dC;
 
-    @Before
-    public void setUp() {
+
+    @BeforeEach
+    void setUp() {
         sC = new Conversor(PrecisionEnum.SIMPLE);
         dC = new Conversor(PrecisionEnum.DOUBLE);
     }
 
-    @org.junit.Test
-    public void convertSimpleFormat() {
-
+    @Test
+    public void convertToIEEE() {
+        String[][] tests = new String[][]{
+                //{numero, signo, exponente, mantisa}
+                {"-0.75","1","01111110","10000000000000000000000"},
+                {"-0.7521","1","01111110","10000001000100110100000"},
+                {"-0","1","00000000","00000000000000000000000"}
+        };
+        for (String[] test: tests) {
+            double num = Double.parseDouble(test[0]);
+            sC.convertToIEEE(num);
+            assertEquals(Integer.parseInt(test[1]),sC.getSigno(),"caso: " + test[0]+" SIGNO");
+            assertEquals(getInts(test[2]),sC.getExponent(),"caso: " +test[0]+" EXPONENTE");
+            assertEquals(getInts(test[3]),sC.getMantisa(),"caso: " +test[0]+" MANTISA");
+        }
     }
 
-    @org.junit.Test
-    public void calculateIEEE() {
-        //assertEquals("", );
-    }
-
-    @org.junit.Test
+    @Test
     public void printIEEEFormat() {
-        sC.convertSimpleFormat(-0.75);
-        sC.printIEEEFormat();
+        double[] tests = new double[]{
+                -0.75,
+                -0.7521,
+                -0
+        };
+        for (double test: tests) {
+            System.out.println(test);
+            sC.convertToIEEE(test);
+            sC.printIEEEFormat();
+        }
     }
 
-    @org.junit.Test
+    @Test
     public void calculateExponent() {
 
     }
 
-    @org.junit.Test
+    @Test
     public void calculateNegativeShifts() {
     }
 
-    @org.junit.Test
+    @Test
     public void conformateMantisa() {
         String[][] tests = new String[][]{
                 {"0", "0", "00000000000000000000001"},
@@ -60,7 +77,7 @@ public class ConversorTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void getWholePartBits() {
         int[] testCases = new int[]{
                 0, 1, 2, Integer.MAX_VALUE, 1234123, 9999, 992939129
@@ -74,7 +91,7 @@ public class ConversorTest {
     }
 
 
-    @org.junit.Test
+    @Test
     public void getDecimalPartBits() {
         double[] tests = new double[]{
                 0.5, 0.75, 0.875, 0.9375, 0.96875, 0.984375, 0.9921875,

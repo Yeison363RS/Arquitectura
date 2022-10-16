@@ -14,23 +14,26 @@ public class Conversor {
         this.precision = precision;
     }
 
-    public void convertSimpleFormat(double numberUser) {
+    public void convertToIEEE(double numberUser) {
         int wholePart = (int) numberUser;//Obtiene parte entera
-        double decimalPart = numberUser - wholePart;//Obtiene la parte decimal
+        double decimalPart = Math.abs(numberUser - wholePart);//Obtiene la parte decimal
         ArrayList<Integer> binInteger = getWholePartBits(wholePart);
         ArrayList<Integer> binDecimal = getDecimalPartBits(
                 decimalPart, precision.bitsMantisa - (binInteger.size() - 1)
         );
         signo = (numberUser > 0) ? 0 : 1;
-        if (wholePart == 0) {
-            int negativeShifts = calculateNegativeShifts(binDecimal);
-            if (negativeShifts > 0) {
-                binDecimal.addAll(getDecimalPartBits(decimalValue, negativeShifts));
-            }
-            this.exponent = calculateExponent(-negativeShifts);
-        } else {
+
+        if (wholePart != 0) {
             this.exponent = calculateExponent(binInteger.size() - 1);
+            mantisa = conformateMantisa(binInteger, binDecimal);
+            return;
         }
+
+        int negativeShifts = calculateNegativeShifts(binDecimal);
+        if (negativeShifts > 0) {
+            binDecimal.addAll(getDecimalPartBits(decimalValue, negativeShifts));
+        }
+        this.exponent = calculateExponent(-negativeShifts);
         mantisa = conformateMantisa(binInteger, binDecimal);
     }
 
@@ -52,7 +55,7 @@ public class Conversor {
     public int calculateNegativeShifts(ArrayList<Integer> binDecimal) {
         int shift = 1;
         for (Integer integer : binDecimal) {
-            if (integer != 0) {
+            if (integer == 1) {
                 return shift;
             }
             shift++;
@@ -62,11 +65,15 @@ public class Conversor {
 
     public ArrayList<Integer> conformateMantisa(ArrayList<Integer> binInteger, ArrayList<Integer> binDecimal) {
         binInteger.addAll(binDecimal);
+        if (!binInteger.contains(1) || binInteger.get(binInteger.size()-1) == 1){
+            binInteger.clear();
+            binInteger.add(0);
+            return binDecimal;
+        }
         while (binInteger.get(0) == 0) {
             binInteger.remove(0);
         }
         binInteger.remove(0);
-        if (binInteger.isEmpty()) binInteger.add(0);
         return binInteger;
     }
 
@@ -103,5 +110,17 @@ public class Conversor {
         }
         decimalValue = decimal;
         return binDecimal;
+    }
+
+    public ArrayList<Integer> getMantisa() {
+        return mantisa;
+    }
+
+    public ArrayList<Integer> getExponent() {
+        return exponent;
+    }
+
+    public int getSigno() {
+        return signo;
     }
 }
