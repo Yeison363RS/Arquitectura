@@ -62,9 +62,11 @@ public class Conversor {
 
     public ArrayList<Integer> conformateMantisa(ArrayList<Integer> binInteger, ArrayList<Integer> binDecimal) {
         binInteger.addAll(binDecimal);
-        while (binInteger.get(0) != 0) {
+        while (binInteger.get(0) == 0) {
             binInteger.remove(0);
         }
+        binInteger.remove(0);
+        if (binInteger.isEmpty()) binInteger.add(0);
         return binInteger;
     }
 

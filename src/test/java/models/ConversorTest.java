@@ -47,17 +47,15 @@ public class ConversorTest {
 
     @org.junit.Test
     public void conformateMantisa() {
-        String[] tests = new String[]{
-                "0000111100001111000011110000111"
+        String[][] tests = new String[][]{
+                {"0", "0", "00000000000000000000001"},
+                {"00000000000000000000001", "1", "00000000000000000000001"},
+                {"11100001101010101", "0", "00000111100001101010101"}
         };
-        for (String test : tests) {
-            System.out.println(getInts(test.substring(0, PrecisionEnum.SIMPLE.bitsExponent)));
-            System.out.println(getInts(test.substring(PrecisionEnum.SIMPLE.bitsExponent)));
+        for (String[] test : tests) {
             assertEquals(
-                    test,
-                    arrayToString(sC.conformateMantisa(
-                            getInts(test.substring(0, PrecisionEnum.SIMPLE.bitsExponent)),
-                            getInts(test.substring(PrecisionEnum.SIMPLE.bitsMantisa))
+                    test[0],
+                    arrayToString(sC.conformateMantisa(getInts(test[1]), getInts(test[2])
                     )));
         }
     }
@@ -104,7 +102,7 @@ public class ConversorTest {
                 0.49999988079071045, 0.9999998807907104};
         String value1 = "111111111111111111111110";
         //Test for 111111111111111111111110, 111111111111111111111100, 111111111111111111111000, ...
-        for (int i = tests.length-1; i >= 0; i--) {
+        for (int i = tests.length - 1; i >= 0; i--) {
             assertEquals(value1,
                     arrayToString(sC.getDecimalPartBits(tests[i], 24)));
             value1 = value1.replaceFirst("1", "0");
