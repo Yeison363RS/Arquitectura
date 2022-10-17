@@ -11,9 +11,10 @@ class NotationConverterTest {
         int[] testCases = new int[]{
                 0, 1, 2, Integer.MAX_VALUE, 1234123, 9999, 992939129
         };
+        StringBuilder bd = new StringBuilder();
         //Test Basic cases
         for (int test : testCases) {
-            assertEquals(Integer.toBinaryString(test), NotationConverter.listToString(NotationConverter.getWholePartBits(test)));
+            assertEquals(Integer.toBinaryString(test), NotationConverter.listToString(NotationConverter.getWholePartBits(test,bd)));
         }
         //Test for negative values
         //assertThrows(IllegalArgumentException.class, () -> sC.getWholePartBits(-1));

@@ -6,30 +6,35 @@ import java.util.ArrayList;
 
 public class IEEEConverter {
 
-    private final PrecisionEnum precision;
+    private PrecisionEnum precision;
     private ArrayList<Integer> mantisa = new ArrayList<>();
     private ArrayList<Integer> exponent = new ArrayList<>();
     private String hexadecimal="";
-    private int signo = 0;
+    private int sign = 0;
     private double decimalValue = 0;
-
     public IEEEConverter(PrecisionEnum precision) {
         this.precision = precision;
     }
 
     public void convertToIEEE(double numberUser) {
+        Procedure.INSTANCE.clear();
         int wholePart = (int) numberUser;//Obtiene parte entera
         double decimalPart = Math.abs(numberUser - wholePart);//Obtiene la parte decimal
-        ArrayList<Integer> binInteger = NotationConverter.getWholePartBits(wholePart);
+        ArrayList<Integer> binInteger = NotationConverter.getWholePartBits(wholePart, Procedure.INSTANCE.step1WholeToBinary);
         ArrayList<Integer> binDecimal = getDecimalPartBits(
             decimalPart, precision.bitsMantisa - (binInteger.size() - 1)
             );
-        signo = (numberUser >= 0) ? 0 : 1;
+        sign = (numberUser >= 0) ? 0 : 1;
 
         if (wholePart != 0) {
             this.exponent = calculateExponent(binInteger.size() - 1);
             mantisa = conformateMantisa(binInteger, binDecimal);
-            this.hexadecimal = convertToHexadecimal(signo,exponent, mantisa);
+            this.hexadecimal = convertToHexadecimal(sign,exponent, mantisa);
+            Procedure.INSTANCE.setResultDecimalToBinary(
+                    Procedure.INSTANCE.step2DecimalPartToBinary,
+                    NotationConverter.listToString(binDecimal));
+
+            Procedure.INSTANCE.setStep3JoinWholeAndDecimal(binInteger, binDecimal);
             return;
         }
 
@@ -38,31 +43,37 @@ public class IEEEConverter {
             binDecimal.addAll(getDecimalPartBits(decimalValue, negativeShifts));
             binDecimal=new ArrayList<>(binDecimal.subList(negativeShifts, binDecimal.size())); 
         }
+
+        Procedure.INSTANCE.setResultDecimalToBinary(
+                Procedure.INSTANCE.step2DecimalPartToBinary,
+                NotationConverter.listToString(binDecimal));
+
+        Procedure.INSTANCE.setStep3JoinWholeAndDecimal(binInteger, binDecimal);
         this.exponent = calculateExponent(-negativeShifts);
         mantisa = conformateMantisa(binInteger, binDecimal);
-        this.hexadecimal = convertToHexadecimal(signo,exponent, mantisa);
+        this.hexadecimal = convertToHexadecimal(sign,exponent, mantisa);
     }
 
     public String convertToHexadecimal(int sign, ArrayList<Integer> exp, ArrayList<Integer> man){
-        ArrayList<Integer> pivot = new ArrayList<>();
-        pivot.addAll(exp);
+        ArrayList<Integer> pivot = new ArrayList<>(exp);
         pivot.addAll(man);
         String binaryString = sign + NotationConverter.listToString(pivot);
         return NotationConverter.binaryStringToHexadecimal(binaryString);
     }
     public void printIEEEFormat() {
-        System.out.println("signo: " + signo);
+        System.out.println("signo: " + sign);
         System.out.println("exponent: " + exponent.toString());
         System.out.println("mantisa: " + mantisa.toString());
         System.out.println("hexadecimal: "+this.hexadecimal);
     }
 
     public ArrayList<Integer> calculateExponent(int shifts) {
+        Procedure.INSTANCE.step4Slipping = shifts;//Almacena el corrimiento en el procedimiento
         int exponentDecimal = (int) Math.pow(2.0, precision.bitsExponent - 1) - 1 + shifts;
         if(shifts==-24){
             exponentDecimal=0;
         }
-        ArrayList<Integer> exponent = NotationConverter.getWholePartBits(exponentDecimal);
+        ArrayList<Integer> exponent = NotationConverter.getWholePartBits(exponentDecimal, Procedure.INSTANCE.step6ExpToBinary);
         while (exponent.size() != precision.bitsExponent) {
             exponent.add(0,0);
         }
@@ -81,14 +92,19 @@ public class IEEEConverter {
     }
 
     public ArrayList<Integer> conformateMantisa(ArrayList<Integer> binInteger, ArrayList<Integer> binDecimal) {
-        binInteger.addAll(binDecimal);
-        binInteger.remove(0);
-        return binInteger;
+        ArrayList<Integer> pivot = new ArrayList<>(binInteger);
+        pivot.addAll(binDecimal);
+        pivot.remove(0);
+        return pivot;
     }
 
     public ArrayList<Integer> getDecimalPartBits(double decimal, int totalPrecision) {
         ArrayList<Integer> binDecimal = new ArrayList<>();
         for (int i = 0; i < totalPrecision; i++) {
+            if (decimal > 0){
+                Procedure.INSTANCE.addStepDecimalToBinary(Procedure.INSTANCE.step2DecimalPartToBinary,
+                        ""+(int)(decimal*2),decimal+"*2");
+            }
             decimal *= 2;
             if (decimal >= 1) {
                 binDecimal.add(1);
@@ -101,15 +117,27 @@ public class IEEEConverter {
         return binDecimal;
     }
 
-    public ArrayList<Integer> getMantisa() {
-        return mantisa;
+    public String getMantisa() {
+        return NotationConverter.listToString(mantisa);
     }
 
-    public ArrayList<Integer> getExponent() {
-        return exponent;
+    public String getExponent() {
+        return NotationConverter.listToString(exponent);
     }
 
-    public int getSigno() {
-        return signo;
+    public int getSign() {
+        return sign;
+    }
+
+    public void setPrecision(PrecisionEnum precision) {
+        this.precision = precision;
+    }
+
+    public PrecisionEnum getPrecision() {
+        return precision;
+    }
+
+    public String getHexadecimal() {
+        return hexadecimal;
     }
 }

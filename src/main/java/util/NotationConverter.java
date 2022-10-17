@@ -1,5 +1,7 @@
 package util;
 
+import models.Procedure;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,18 +36,22 @@ public class NotationConverter {
      * @return un array con los bits del número
      * @throws IllegalArgumentException si numberUser es negativo
      */
-    public static ArrayList<Integer> getWholePartBits(int numberUser) {
+    public static ArrayList<Integer> getWholePartBits(int numberUser, StringBuilder builder) {
         //if (numberUser < 0) throw new IllegalArgumentException("Negative Value");
         numberUser=Math.abs(numberUser);
         ArrayList<Integer> binInt = new ArrayList<>();
         if (numberUser == 0) {
+            Procedure.INSTANCE.addStepDecimalToBinary(builder," ","0");
+            Procedure.INSTANCE.setResultDecimalToBinary(builder,"0");
             binInt.add(numberUser);
             return binInt;
         }
         while (numberUser > 0) {
             binInt.add(0,numberUser % 2);
+            Procedure.INSTANCE.addStepDecimalToBinary(builder,""+numberUser%2,""+numberUser);
             numberUser = numberUser / 2;
         }
+        Procedure.INSTANCE.setResultDecimalToBinary(builder,listToString(binInt));
         return binInt;
     }
 }

@@ -31,9 +31,24 @@ public class IEEEConverterTest {
         for (String[] test: tests) {
             double num = Double.parseDouble(test[0]);
             sC.convertToIEEE(num);
-            assertEquals(Integer.parseInt(test[1]),sC.getSigno(),"caso: " + test[0]+" SIGNO");
-            assertEquals(getInts(test[2]),sC.getExponent(),"caso: " +test[0]+" EXPONENTE");
-            assertEquals(getInts(test[3]),sC.getMantisa(),"caso: " +test[0]+" MANTISA");
+            assertEquals(Integer.parseInt(test[1]),sC.getSign(),"caso: " + test[0]+" SIGNO");
+            assertEquals(test[2],sC.getExponent(),"caso: " +test[0]+" EXPONENTE");
+            assertEquals(test[3],sC.getMantisa(),"caso: " +test[0]+" MANTISA");
+        }
+
+        tests = new String[][]{
+                //{numero, signo, exponente, mantisa}
+                {"-0.75","1","01111111110","1000000100010011010000000100111010100100101010001100"}//,
+                //{"-0.7521","1","01111110","10000001000100110100000"},
+                //{"-2.25","1","10000000","00100000000000000000000"},
+                //{"-0","0","00000000","00000000000000000000000"}
+        };
+        for (String[] test: tests) {
+            double num = Double.parseDouble(test[0]);
+            sC.convertToIEEE(num);
+            assertEquals(Integer.parseInt(test[1]),dC.getSign(),"caso: " + test[0]+" SIGNO");
+            assertEquals(getInts(test[2]),dC.getExponent(),"caso: " +test[0]+" EXPONENTE");
+            assertEquals(getInts(test[3]),dC.getMantisa(),"caso: " +test[0]+" MANTISA");
         }
     }
 
