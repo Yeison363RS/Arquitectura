@@ -10,9 +10,9 @@ public class PanelResults extends JPanel {
     private JLabel labelSign;
     private JLabel labelExponent;
     private JLabel labelMantissa;
-    private TextField textFieldSign;
-    private TextField textFieldExponent;
-    private TextField textFieldMantissa;
+    private JTextField textFieldSign;
+    private JTextField textFieldExponent;
+    private JTextField textFieldMantissa;
     private JLabel labelDecimalEquivalentValueAndExponent;
     private JTextField textFieldBleed;
     private JLabel labelPrecision;
@@ -25,18 +25,20 @@ public class PanelResults extends JPanel {
     private JTextField textFieldDecimalValue;
 
     public PanelResults(String tittle, ActionListener listener, String textPrecision) {
-        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(1), tittle, 0, 0, new java.awt.Font("Arial Narrow", Font.ITALIC, 15))); // NOI18N
+        setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(0, 0, 0), 2), tittle, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new Font("Arial Narrow", 2, 15))); // NOI18N
         this.init(textPrecision);
 
     }
 
     private void init(String textPrecision) {
+        this.setBackground(Constants.COLOR_PANEL_RESULTS);
+
         this.labelSign = new JLabel(Texts.LABEL_SIGN);
-        this.textFieldSign = new TextField();
+        this.textFieldSign = new JTextField();
         this.labelExponent = new JLabel(Texts.LABEL_EXPONENT);
         this.labelMantissa = new JLabel(Texts.LABEL_MANTISSA);
-        this.textFieldExponent = new TextField();
-        this.textFieldMantissa = new TextField();
+        this.textFieldExponent = new JTextField();
+        this.textFieldMantissa = new JTextField();
         this.labelDecimalEquivalentValueAndExponent = new JLabel(Texts.LABEL_VALUE_DECIMAL_EQUIVALENT);
         this.textFieldBleed = new JTextField();
         this.textFieldBleed = new JTextField();
@@ -48,6 +50,14 @@ public class PanelResults extends JPanel {
         this.textFieldHexValue = new JTextField();
         this.labelDecimalValue = new JLabel(Texts.VALUE_DECIMAL);
         this.textFieldDecimalValue = new JTextField();
+        this.textFieldHexValue.setBorder(Constants.LINE_BORDER);
+        this.textFieldBleed.setBorder(Constants.LINE_BORDER);
+        this.textFieldDecimalValue.setBorder(Constants.LINE_BORDER);
+        this.textFieldMantissa.setBorder(Constants.LINE_BORDER);
+        this.textFieldExponent.setBorder(Constants.LINE_BORDER);
+        this.textFieldBleedResult.setBorder(Constants.LINE_BORDER);
+        this.textFieldSign.setBorder(Constants.LINE_BORDER);
+        this.textFieldEquivalentDecimalValue.setBorder(Constants.LINE_BORDER);
         this.fill();
     }
 

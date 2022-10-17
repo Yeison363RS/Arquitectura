@@ -24,6 +24,7 @@ public class GuiManager extends JFrame {
     }
 
     private void init(ActionListener listener) {
+        this.getContentPane().setBackground(Constants.COLOR_FRAME);
         this.panelGetNumber = new PanelGetNumber(listener);
         this.panelResults32 = new PanelResults(Texts.TITTLE_PANEL_PRECISION_SIMPLE, listener, Texts.VALUE_PRECISION_SIMPLE);
         this.panelResults64 = new PanelResults(Texts.TITTLE_PANEL_PRECISION_DOUBLE, listener, Texts.VALUE_PRECISION_DOUBLE);
@@ -37,7 +38,7 @@ public class GuiManager extends JFrame {
         this.panelGetNumber.setBounds(20, 20, 600, 60);
         this.panelResults32.setBounds(20, 90, 600, 360);
         this.panelResults64.setBounds(20, 90, 600, 360);
-        this.panelProcess.setBounds(640, 20, 600, 720);
+        this.panelProcess.setBounds(640, 20, 600, 810);
         add(panelGetNumber);
         add(panelResults32);
         add(panelResults64);

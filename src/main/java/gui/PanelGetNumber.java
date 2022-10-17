@@ -20,11 +20,12 @@ public class PanelGetNumber extends JPanel {
     private ButtonGroup buttonGroup = new ButtonGroup();
 
     public PanelGetNumber(ActionListener listener) {
-        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(1), Texts.TITTLE_PANEL_GET_NUMBER, 0, 0, new java.awt.Font("Arial Narrow", Font.ITALIC, 15))); // NOI18N
+        setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(0, 0, 0), 2), Texts.TITTLE_PANEL_GET_NUMBER, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new Font("Arial Narrow", 2, 15))); // NOI18N
         this.init(listener);
     }
 
     private void init(ActionListener listener) {
+        this.setBackground(Constants.COLOR_PANEL_PROCESS_AND_GET_NUMBER);
         this.labelNumberToConverter = new JLabel(Texts.LABEL_NUMBER_TO_CONVERT);
         this.textFieldGetNumberToConverter = new JTextField();
         this.btnConvert = new JButton(Texts.BTN_CONVERT);
@@ -52,7 +53,12 @@ public class PanelGetNumber extends JPanel {
         checkPrecisionSimple.setActionCommand(Commands.PRECISION_SIMPLE);
         checkPrecisionDouble.setActionCommand(Commands.PRECISION_DOUBLE);
         this.checkPrecisionDouble.addActionListener(listener);
+        this.btnConvert.setBackground(Constants.COLOR_BTN_CONVERT);
+        this.checkPrecisionDouble.setBackground(Constants.COLOR_PANEL_PROCESS_AND_GET_NUMBER);
+        this.checkPrecisionSimple.setBackground(Constants.COLOR_PANEL_PROCESS_AND_GET_NUMBER);
         this.fill();
+        this.textFieldGetNumberToConverter.setBorder(Constants.LINE_BORDER);
+        this.btnConvert.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0), 2));
     }
 
     private void fill() {

@@ -1,7 +1,6 @@
 package gui;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class PanelProcess extends JPanel {
 
@@ -24,11 +23,12 @@ public class PanelProcess extends JPanel {
     private JTextArea developStep8;
 
     public PanelProcess() {
-        setBorder(javax.swing.BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(1), Texts.TITLE_PANEL_PROCESS, 0, 0, new Font("Arial Narrow", Font.ITALIC, 15))); // NOI18N
+        setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), Texts.TITLE_PANEL_PROCESS, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Narrow", 2, 15))); // NOI18N
         this.init();
     }
 
     private void init() {
+        this.setBackground(Constants.COLOR_PANEL_PROCESS_AND_GET_NUMBER);
         this.step1 = new JLabel(Texts.TEXT_STEP1);
         this.step2 = new JLabel(Texts.TEXT_STEP2);
         this.step3 = new JLabel(Texts.TEXT_STEP3);
@@ -59,10 +59,25 @@ public class PanelProcess extends JPanel {
 
     private void fill() {
         this.setLayout(null);
+        developStep1.setLayout(new ModifiedFlowLayout());
+        JScrollPane jScrollPane = new JScrollPane(developStep1);
+        jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane.setBounds(15, 50, 560, 120);
+        JScrollPane jScrollPane2 = new JScrollPane(developStep2);
+        jScrollPane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane2.setBounds(15, 210, 560, 120);
+        JScrollPane jScrollPane6 = new JScrollPane(developStep6);
+        jScrollPane6.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane6.setBounds(15, 460, 560, 120);
+
+        JScrollPane jScrollPane8 = new JScrollPane(developStep8);
+        jScrollPane8.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane8.setBounds(15, 680, 560, 120);
+
+
         this.step1.setBounds(10, 20, 560, 25);
-        this.developStep1.setBounds(15, 50, 560, 120);
         this.step2.setBounds(10, 180, 560, 25);
-        this.developStep2.setBounds(15, 210, 560, 120);
+
         this.step3.setBounds(10, 340, 200, 25);
         this.developStep3.setBounds(230, 340, 345, 25);
         this.step4.setBounds(10, 370, 200, 25);
@@ -70,15 +85,16 @@ public class PanelProcess extends JPanel {
         this.step5.setBounds(10, 400, 200, 25);
         this.developStep5.setBounds(230, 400, 100, 25);
         this.step6.setBounds(10, 430, 200, 25);
-        this.developStep6.setBounds(15, 460, 560, 120);
+
         this.step7.setBounds(10, 590, 250, 25);
         this.developStep7.setBounds(15, 620, 560, 25);
         this.step8.setBounds(10, 650, 250, 25);
-        this.developStep8.setBounds(15, 680, 560, 25);
+
+
         add(step1);
-        add(developStep1);
+        add(jScrollPane);
         add(step2);
-        add(developStep2);
+        add(jScrollPane2);
         add(step3);
         add(developStep3);
         add(step4);
@@ -86,11 +102,11 @@ public class PanelProcess extends JPanel {
         add(step5);
         add(developStep5);
         add(step6);
-        add(developStep6);
+        add(jScrollPane6);
         add(step7);
         add(developStep7);
         add(step8);
-        add(developStep8);
+        add(jScrollPane8);
     }
 
     public void setDevelopStep1(String developStep1) {
