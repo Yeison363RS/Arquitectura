@@ -1,7 +1,7 @@
 package controllers;
 
 import gui.GuiManager;
-import models.Conversor;
+import models.IEEEConverter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class Controller implements ActionListener {
 
     private GuiManager guiManager;
-    private Conversor conversor;
+    private IEEEConverter IEEEConverter;
 
     public Controller() {
         this.guiManager = new GuiManager(this);
