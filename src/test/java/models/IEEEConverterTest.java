@@ -2,24 +2,21 @@ package models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import util.NotationConverter;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ConversorTest {
+public class IEEEConverterTest {
 
-    Conversor sC;
-    Conversor dC;
-
+    IEEEConverter sC;
+    IEEEConverter dC;
 
     @BeforeEach
     void setUp() {
-        sC = new Conversor(PrecisionEnum.SIMPLE);
-        dC = new Conversor(PrecisionEnum.DOUBLE);
+        sC = new IEEEConverter(PrecisionEnum.SIMPLE);
+        dC = new IEEEConverter(PrecisionEnum.DOUBLE);
     }
 
     @Test
@@ -28,6 +25,7 @@ public class ConversorTest {
                 //{numero, signo, exponente, mantisa}
                 {"-0.75","1","01111110","10000000000000000000000"},
                 {"-0.7521","1","01111110","10000001000100110100000"},
+                {"-2.25","1","10000000","00100000000000000000000"},
                 {"-0","0","00000000","00000000000000000000000"}
         };
         for (String[] test: tests) {
@@ -67,29 +65,16 @@ public class ConversorTest {
         String[][] tests = new String[][]{
                 {"100100", "0", "100100"},
                 {"00000000000000000000001", "1", "00000000000000000000001"},
-                {"11100001101010101", "0", "11100001101010101"}
+                {"11100001101010101", "0", "11100001101010101"},
+                {"00000000000000000000001", "1", "00000000000000000000001"}
         };
         for (String[] test : tests) {
             assertEquals(
                     test[0],
-                    arrayToString(sC.conformateMantisa(getInts(test[1]), getInts(test[2])
+                    NotationConverter.listToString(sC.conformateMantisa(getInts(test[1]), getInts(test[2])
                     )));
         }
     }
-
-    @Test
-    public void getWholePartBits() {
-        int[] testCases = new int[]{
-                0, 1, 2, Integer.MAX_VALUE, 1234123, 9999, 992939129
-        };
-        //Test Basic cases
-        for (int test : testCases) {
-            assertEquals(Integer.toBinaryString(test), arrayToString(sC.getWholePartBits(test)));
-        }
-        //Test for negative values
-        assertThrows(IllegalArgumentException.class, () -> sC.getWholePartBits(-1));
-    }
-
 
     @Test
     public void getDecimalPartBits() {
@@ -106,7 +91,7 @@ public class ConversorTest {
         for (double test : tests) {
             value = value.replaceFirst("0", "1");
             assertEquals(value,
-                    arrayToString(sC.getDecimalPartBits(test, 24)));
+                    NotationConverter.listToString(sC.getDecimalPartBits(test, 24)));
         }
         tests = new double[]{
                 1.1920928955078125e-07, 3.5762786865234375e-07, 8.344650268554688e-07,
@@ -121,19 +106,13 @@ public class ConversorTest {
         //Test for 111111111111111111111110, 111111111111111111111100, 111111111111111111111000, ...
         for (int i = tests.length - 1; i >= 0; i--) {
             assertEquals(value1,
-                    arrayToString(sC.getDecimalPartBits(tests[i], 24)));
+                    NotationConverter.listToString(sC.getDecimalPartBits(tests[i], 24)));
             value1 = value1.replaceFirst("1", "0");
         }
 
         assertEquals("100000000000000000000010",
-                arrayToString(sC.getDecimalPartBits(0.5000001192092896, 24))
+                NotationConverter.listToString(sC.getDecimalPartBits(0.5000001192092896, 24))
         );
-    }
-
-    private static String arrayToString(List<Integer> integers) {
-        return integers.stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(""));
     }
 
     private static ArrayList<Integer> getInts(String number) {
