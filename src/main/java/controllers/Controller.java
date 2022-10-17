@@ -58,14 +58,20 @@ public class Controller implements ActionListener {
             guiManager.setExponentPrecisionSimple(ieeeConverter.getExponent());
             guiManager.setMantissaPrecisionSimple(ieeeConverter.getMantisa());
             guiManager.setValueHexSimplePrecision(ieeeConverter.getHexadecimal());
-            guiManager.setDevelopStep1(Procedure.INSTANCE.getStep1WholeToBinary());
-            guiManager.setDevelopStep2(Procedure.INSTANCE.getStep2DecimalPartToBinary());
-            System.out.println(Procedure.INSTANCE.getStep3JoinWholeAndDecimal());
-            guiManager.setDevelopStep3(Procedure.INSTANCE.getStep3JoinWholeAndDecimal());
-            guiManager.setDevelopStep6(Procedure.INSTANCE.getStep6ExpToBinary());
-            guiManager.setDevelopStep4(Procedure.INSTANCE.getStep4Slipping()+"");
         }else{
             System.out.println("DOBLE");
+            guiManager.setSignPrecisionDouble(ieeeConverter.getSign());
+            guiManager.setExponentPrecisionDouble(ieeeConverter.getExponent());
+            guiManager.setMantissaPrecisionDouble(ieeeConverter.getMantisa());
+            guiManager.setValueHexDoublePrecision(ieeeConverter.getHexadecimal());
         }
+        guiManager.setDevelopStep1(Procedure.INSTANCE.getStep1WholeToBinary());
+        guiManager.setDevelopStep2(Procedure.INSTANCE.getStep2DecimalPartToBinary());;
+        guiManager.setDevelopStep3(Procedure.INSTANCE.getStep3JoinWholeAndDecimal());
+        guiManager.setDevelopStep4(Procedure.INSTANCE.getStep4Slipping()+"");
+        guiManager.setDevelopStep5(Procedure.INSTANCE.getStep5CalcExponent());
+        guiManager.setDevelopStep6(Procedure.INSTANCE.getStep6ExpToBinary());
+        guiManager.setDevelopStep7(Procedure.INSTANCE.getStep7IEEENotation());
+        guiManager.setDevelopStep8(Procedure.INSTANCE.getStep8ToHex());
     }
 }

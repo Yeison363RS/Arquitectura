@@ -1,5 +1,6 @@
 package util;
 
+import models.IEEEConverter;
 import models.Procedure;
 
 import java.util.ArrayList;
@@ -18,8 +19,11 @@ public class NotationConverter {
         }
         String result = "";
         for (int i = binary.length(); i > 3; i-=4) {
-            int decimal = Integer.parseInt(binary.substring(i-4,i),2);
-            result = Integer.toString(decimal,16).concat(result);
+            String sub = binary.substring(i-4,i);
+            int decimal = Integer.parseInt(sub,2);
+            String hexValue = Integer.toString(decimal,16);
+            Procedure.INSTANCE.addStepToHex(sub,hexValue);
+            result = hexValue.concat(result);
         }
         return result.toUpperCase();
     }
@@ -48,7 +52,7 @@ public class NotationConverter {
         }
         while (numberUser > 0) {
             binInt.add(0,numberUser % 2);
-            Procedure.INSTANCE.addStepDecimalToBinary(builder,""+numberUser%2,""+numberUser);
+            Procedure.INSTANCE.addStepDecimalToBinary(builder,""+numberUser%2,""+numberUser+"/2");
             numberUser = numberUser / 2;
         }
         Procedure.INSTANCE.setResultDecimalToBinary(builder,listToString(binInt));

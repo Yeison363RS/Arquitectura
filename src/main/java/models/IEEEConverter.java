@@ -35,6 +35,7 @@ public class IEEEConverter {
                     NotationConverter.listToString(binDecimal));
 
             Procedure.INSTANCE.setStep3JoinWholeAndDecimal(binInteger, binDecimal);
+            Procedure.INSTANCE.setStep7IEEENotation(sign,exponent, mantisa);
             return;
         }
 
@@ -52,6 +53,7 @@ public class IEEEConverter {
         this.exponent = calculateExponent(-negativeShifts);
         mantisa = conformateMantisa(binInteger, binDecimal);
         this.hexadecimal = convertToHexadecimal(sign,exponent, mantisa);
+        Procedure.INSTANCE.setStep7IEEENotation(sign,exponent, mantisa);
     }
 
     public String convertToHexadecimal(int sign, ArrayList<Integer> exp, ArrayList<Integer> man){
@@ -69,6 +71,7 @@ public class IEEEConverter {
 
     public ArrayList<Integer> calculateExponent(int shifts) {
         Procedure.INSTANCE.step4Slipping = shifts;//Almacena el corrimiento en el procedimiento
+        Procedure.INSTANCE.setStep5CalcExponent(precision);
         int exponentDecimal = (int) Math.pow(2.0, precision.bitsExponent - 1) - 1 + shifts;
         if(shifts==-24){
             exponentDecimal=0;

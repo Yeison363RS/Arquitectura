@@ -1,5 +1,7 @@
 package gui;
 
+import com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -14,6 +16,8 @@ public class GuiManager extends JFrame {
 
     public GuiManager(ActionListener listener) throws HeadlessException {
         super(Texts.MAIN_TITTLE);
+        //configurar tema de la aplicacion
+        FlatCyanLightIJTheme.setup();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 //        setLocationRelativeTo(null);
 //        setResizable(false);
