@@ -42,7 +42,6 @@ public class GuiManager extends JFrame {
         add(panelResults32);
         add(panelResults64);
         add(panelProcess);
-
     }
 
     public void setSignPrecisionSimple(int sign) {
