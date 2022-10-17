@@ -25,7 +25,7 @@ public class PanelGetNumber extends JPanel {
     }
 
     private void init(ActionListener listener) {
-        this.setBackground(Constants.COLOR_PANEL_PROCESS_AND_GET_NUMBER);
+        this.setBackground(MyColors.generateRandomColor(Constants.COLOR_BASE));
         this.labelNumberToConverter = new JLabel(Texts.LABEL_NUMBER_TO_CONVERT);
         this.textFieldGetNumberToConverter = new JTextField();
         this.btnConvert = new JButton(Texts.BTN_CONVERT);
@@ -53,9 +53,10 @@ public class PanelGetNumber extends JPanel {
         checkPrecisionSimple.setActionCommand(Commands.PRECISION_SIMPLE);
         checkPrecisionDouble.setActionCommand(Commands.PRECISION_DOUBLE);
         this.checkPrecisionDouble.addActionListener(listener);
-        this.btnConvert.setBackground(Constants.COLOR_BTN_CONVERT);
-        this.checkPrecisionDouble.setBackground(Constants.COLOR_PANEL_PROCESS_AND_GET_NUMBER);
-        this.checkPrecisionSimple.setBackground(Constants.COLOR_PANEL_PROCESS_AND_GET_NUMBER);
+        this.btnConvert.setBackground(MyColors.generateRandomColor(Constants.COLOR_BASE));
+        Color color = MyColors.generateRandomColor(Constants.COLOR_BASE);
+        this.checkPrecisionDouble.setBackground(color);
+        this.checkPrecisionSimple.setBackground(color);
         this.fill();
         this.textFieldGetNumberToConverter.setBorder(Constants.LINE_BORDER);
         this.btnConvert.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0), 2));

@@ -24,7 +24,7 @@ public class GuiManager extends JFrame {
     }
 
     private void init(ActionListener listener) {
-        this.getContentPane().setBackground(Constants.COLOR_FRAME);
+        this.getContentPane().setBackground(MyColors.generateRandomColor(Constants.COLOR_BASE));
         this.panelGetNumber = new PanelGetNumber(listener);
         this.panelResults32 = new PanelResults(Texts.TITTLE_PANEL_PRECISION_SIMPLE, listener, Texts.VALUE_PRECISION_SIMPLE);
         this.panelResults64 = new PanelResults(Texts.TITTLE_PANEL_PRECISION_DOUBLE, listener, Texts.VALUE_PRECISION_DOUBLE);

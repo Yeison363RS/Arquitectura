@@ -31,7 +31,7 @@ public class PanelResults extends JPanel {
     }
 
     private void init(String textPrecision) {
-        this.setBackground(Constants.COLOR_PANEL_RESULTS);
+        this.setBackground(MyColors.generateRandomColor(Constants.COLOR_BASE));
 
         this.labelSign = new JLabel(Texts.LABEL_SIGN);
         this.textFieldSign = new JTextField();

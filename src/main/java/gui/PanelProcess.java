@@ -28,7 +28,7 @@ public class PanelProcess extends JPanel {
     }
 
     private void init() {
-        this.setBackground(Constants.COLOR_PANEL_PROCESS_AND_GET_NUMBER);
+        this.setBackground(MyColors.generateRandomColor(Constants.COLOR_BASE));
         this.step1 = new JLabel(Texts.TEXT_STEP1);
         this.step2 = new JLabel(Texts.TEXT_STEP2);
         this.step3 = new JLabel(Texts.TEXT_STEP3);
