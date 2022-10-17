@@ -25,7 +25,7 @@ public class PanelResults extends JPanel {
     private JTextField textFieldDecimalValue;
 
     public PanelResults(String tittle, ActionListener listener, String textPrecision) {
-        setBorder(BorderFactory.createTitledBorder(tittle));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(1), tittle, 0, 0, new java.awt.Font("Arial Narrow", Font.ITALIC, 15))); // NOI18N
         this.init(textPrecision);
 
     }
@@ -59,16 +59,16 @@ public class PanelResults extends JPanel {
         this.textFieldExponent.setBounds(80, 70, 180, 25);
         this.labelMantissa.setBounds(280, 50, 100, 15);
         this.textFieldMantissa.setBounds(280, 70, 300, 25);
-        this.labelDecimalEquivalentValueAndExponent.setBounds(80, 110, 200, 15);
-        this.textFieldBleed.setBounds(80, 135, 50, 22);
-        this.labelPrecision.setBounds(135, 140, 50, 15);
-        this.textFieldBleedResult.setBounds(190, 135, 70, 25);
-        this.labelEquivalentDecimalValue.setBounds(280, 110, 200, 15);
-        this.textFieldEquivalentDecimalValue.setBounds(280, 135, 300, 25);
-        this.labelHexValue.setBounds(10, 170, 150, 15);
-        this.textFieldHexValue.setBounds(125, 170, 150, 25);
-        this.labelDecimalValue.setBounds(285, 170, 150, 25);
-        this.textFieldDecimalValue.setBounds(370, 170, 210, 25);
+        this.labelDecimalEquivalentValueAndExponent.setBounds(10, 110, 200, 15);
+        this.textFieldBleed.setBounds(10, 135, 50, 22);
+        this.labelPrecision.setBounds(70, 140, 50, 15);
+        this.textFieldBleedResult.setBounds(120, 135, 80, 25);
+        this.labelEquivalentDecimalValue.setBounds(10, 170, 150, 15);
+        this.textFieldEquivalentDecimalValue.setBounds(10, 190, 300, 25);
+        this.labelHexValue.setBounds(10, 230, 150, 15);
+        this.textFieldHexValue.setBounds(10, 250, 300, 25);
+        this.labelDecimalValue.setBounds(10, 285, 150, 25);
+        this.textFieldDecimalValue.setBounds(10, 310, 300, 25);
         this.add(labelSign);
         this.add(textFieldSign);
         this.add(labelExponent);

@@ -18,4 +18,13 @@ public interface Texts {
     String VALUE_DECIMAL = "Valor decimal";
     String ERROR_GET_NUMBER = "Por favor ingrese un valor valido";
 
+    String TITLE_PANEL_PROCESS = "Procedimiento";
+    String TEXT_STEP1 = "1) Parte entera a binario";
+    String TEXT_STEP2 = "2) Parte decimal a binario";
+    String TEXT_STEP3 = "3) Unir parte entera y parte decimal";
+    String TEXT_STEP4 = "4) Desplazamiento";
+    String TEXT_STEP5 = "5) Calcular exponente";
+    String TEXT_STEP6 = "6) Convertir exponente a binario";
+    String TEXT_STEP7 = "7) Representacion en notacion IEEE 745";
+    String TEXT_STEP8 = "8) Representacion Hexadecimal";
 }
